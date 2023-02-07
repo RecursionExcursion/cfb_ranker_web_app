@@ -31,9 +31,9 @@ public class MemorySerializationManager<T extends Serializable> {
     private T deserialize(File file) {
         try (FileInputStream fileIn = new FileInputStream(file);
              ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            return  (T) in.readObject();
+            return (T) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException("An error occurred while casting deserialized object. "+e);
+            throw new RuntimeException("An error occurred while casting deserialized object. " + e);
         }
     }
 

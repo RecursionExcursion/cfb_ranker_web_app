@@ -1,6 +1,6 @@
 package com.foofinc.cfb_ranker.service;
 
-import com.foofinc.cfb_ranker.repository.InMemoryRepo;
+import com.foofinc.cfb_ranker.repository.SchoolsRepository;
 import com.foofinc.cfb_ranker.service.dto.RankingDtoMapper;
 import com.foofinc.cfb_ranker.service.dto.RankingsDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,25 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class SchoolService {
 
-    private final InMemoryRepo inMemoryRepo;
+    private final SchoolsRepository schoolsRepository;
 
     @Autowired
-    public SchoolService(InMemoryRepo inMemoryRepo) {
-        this.inMemoryRepo = inMemoryRepo;
+    public SchoolService(SchoolsRepository schoolsRepository) {
+        this.schoolsRepository = schoolsRepository;
     }
 
     public RankingsDto getTeams() {
-        return new RankingDtoMapper(inMemoryRepo.getTeams()).mapRankingsToDto();
+        return new RankingDtoMapper(schoolsRepository.getTeams()).mapRankingsToDto();
     }
-
-//    public String getTeams() {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        try {
-//            RankingsDto rankingsDto = new RankingDtoMapper(inMemoryRepo.getTeams()).mapRankingsToDto();
-////            return objectMapper.writeValueAsString(rankingsDto);
-//            return objectMapper.writeValueAsString(rankingsDto);
-//        } catch (IOException e) {
-//            throw new RuntimeException("Error occurred while mapping object to JSON");
-//        }
-//    }
 }

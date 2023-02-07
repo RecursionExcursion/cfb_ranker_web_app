@@ -1,9 +1,8 @@
 package com.foofinc.cfb_ranker.repository.model;
 
 import com.foofinc.cfb_ranker.repository.api.dto.CompleteGameDto;
+import com.foofinc.cfb_ranker.repository.api.dto.FixtureDto;
 import com.foofinc.cfb_ranker.repository.api.dto.SchoolDto;
-import com.foofinc.cfb_ranker.repository.api.dto.StatsDto;
-import com.foofinc.cfb_ranker.repository.api.dto.TeamDto;
 
 public class ModelGenerator {
 
@@ -17,9 +16,9 @@ public class ModelGenerator {
 
     public static void generateGame(CompleteGameDto completeGameDto) {
 
-        TeamDto away = completeGameDto.getFixtureDto()
-                                      .getTeams()[0];
-        TeamDto home = completeGameDto.getFixtureDto()
+        FixtureDto.TeamDto away = completeGameDto.getFixtureDto()
+                                                 .getTeams()[0];
+        FixtureDto.TeamDto home = completeGameDto.getFixtureDto()
                                       .getTeams()[1];
 
 
@@ -69,9 +68,9 @@ public class ModelGenerator {
 
     }
 
-    private static String getTotalYards(TeamDto thisTeam) {
+    private static String getTotalYards(FixtureDto.TeamDto thisTeam) {
         for (int i = thisTeam.getStats().length - 1; i >= 0; i--) {
-            StatsDto stat = thisTeam.getStats()[i];
+            FixtureDto.TeamDto.StatsDto stat = thisTeam.getStats()[i];
             if (stat.getCategory()
                     .equals("totalYards")) {
                 return stat.getStat();

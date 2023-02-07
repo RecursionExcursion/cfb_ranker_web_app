@@ -3,6 +3,10 @@ package com.foofinc.cfb_ranker.repository.model;
 import java.io.Serializable;
 import java.util.List;
 
+/*
+ *Top Level data structure of all School objects
+ */
+
 public class Schools implements Serializable {
 
     private List<School> schools;
@@ -27,7 +31,7 @@ public class Schools implements Serializable {
         schools = s;
     }
 
-    public void addSchool(School school){
+    public void addSchool(School school) {
         schools.add(school);
     }
 }

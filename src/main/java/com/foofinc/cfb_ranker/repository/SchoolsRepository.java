@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class InMemoryRepo {
+public class SchoolsRepository {
 
     LocalMemoryRepoController localMemoryRepoController = LocalMemoryRepoController.getInstance();
 
     public List<List<StatisticizedTeam_2>> getTeams() {
-    return localMemoryRepoController.retrieveData();
+        return localMemoryRepoController.retrieveData();
     }
 }

@@ -45,4 +45,97 @@ public class FixtureDto implements DTO {
                 "teams=" + Arrays.toString(teams) +
                 '}';
     }
+
+    /*
+     *Inner class representing the two teams
+     */
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class TeamDto implements DTO {
+        private String school;
+        private int points;
+        private StatsDto[] stats;
+
+        public TeamDto() {
+        }
+
+        public TeamDto(String school, int points, StatsDto[] stats) {
+            this.school = school;
+            this.points = points;
+            this.stats = stats;
+        }
+
+        public String getSchool() {
+            return school;
+        }
+
+        public void setSchool(String school) {
+            this.school = school;
+        }
+
+        public int getPoints() {
+            return points;
+        }
+
+        public void setPoints(int points) {
+            this.points = points;
+        }
+
+        public StatsDto[] getStats() {
+            return stats;
+        }
+
+        public void setStats(StatsDto[] stats) {
+            this.stats = stats;
+        }
+
+        @Override
+        public String toString() {
+            return "Team{" +
+                    "school='" + school + '\'' +
+                    ", points=" + points +
+                    ", stats=" + Arrays.toString(stats) +
+                    '}';
+        }
+
+        /**
+         * Inner class representing the stats of the two teams
+         */
+
+        public static class StatsDto implements DTO {
+            private String category;
+            private String stat;
+
+            public StatsDto() {
+            }
+
+            public StatsDto(String category, String stat) {
+                this.category = category;
+                this.stat = stat;
+            }
+
+            public String getCategory() {
+                return category;
+            }
+
+            public void setCategory(String category) {
+                this.category = category;
+            }
+
+            public String getStat() {
+                return stat;
+            }
+
+            public void setStat(String stat) {
+                this.stat = stat;
+            }
+
+            @Override
+            public String toString() {
+                return "Stats{" +
+                        "category='" + category + '\'' +
+                        ", stat='" + stat + '\'' +
+                        '}';
+            }
+        }
+    }
 }

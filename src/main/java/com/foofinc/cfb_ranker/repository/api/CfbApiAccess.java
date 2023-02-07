@@ -1,7 +1,6 @@
 package com.foofinc.cfb_ranker.repository.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.foofinc.cfb_ranker.repository.api.dto.CompleteGameDto;
 import com.foofinc.cfb_ranker.repository.api.dto.FixtureDto;
@@ -21,9 +20,9 @@ public final class CfbApiAccess {
     private final String teamGamesUrlString = "https://api.collegefootballdata.com/games/teams?year=2022"/*&seasonType=regular&week=#*/;
     private final String[] gamesUrlString =
             {"https://api.collegefootballdata.com/games?year=2022" /*&week=#&seasonType=regular*/, "&division=fbs"};
-
     private final List<SchoolDto> schools;
     private final List<Map<Long, CompleteGameDto>> weeks;
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public CfbApiAccess() {
         schools = getAllSchools();
@@ -39,7 +38,7 @@ public final class CfbApiAccess {
     }
 
     private List<SchoolDto> getAllSchools() {
-        return sendGetRequestForAllFBSSchools();
+        return List.of(sendGetRequest(SchoolDto[].class));
     }
 
     /*
@@ -53,6 +52,7 @@ public final class CfbApiAccess {
 
         List<Map<Long, CompleteGameDto>> completeGameMap = new ArrayList<>();
 
+        //Regular Season
         int startingWeek = 1, weeksInSeason = 15;
         for (int i = startingWeek; i <= weeksInSeason; i++) {
             Map<Long, CompleteGameDto> finalListMapCopy = mapToCompleteGameDto(regSeason, i);
@@ -60,6 +60,7 @@ public final class CfbApiAccess {
             completeGameMap.add(finalListMapCopy);
         }
 
+        //Post Season
         Map<Long, CompleteGameDto> finalListMapCopy = mapToCompleteGameDto(postSeason, 1);
         completeGameMap.add(finalListMapCopy);
 
@@ -68,8 +69,8 @@ public final class CfbApiAccess {
     }
 
     private Map<Long, CompleteGameDto> mapToCompleteGameDto(String season, int i) {
-        FixtureDto[] tempFixDto = sendGetRequestForWeekFixtures(i, season);
-        GameDataDto[] tempGameDataDto = sendGetRequestForWeekGameData(i, season);
+        FixtureDto[] tempFixDto = sendGetRequest(i, season, FixtureDto[].class);
+        GameDataDto[] tempGameDataDto = sendGetRequest(i, season, GameDataDto[].class);
         if (tempFixDto.length == 0) {
             return null;
         }
@@ -92,49 +93,34 @@ public final class CfbApiAccess {
                       .collect(Collectors.toMap(id -> id, tempMap::get));
     }
 
-    private List<SchoolDto> sendGetRequestForAllFBSSchools() {
+    private <T> T sendGetRequest(int week, String seasonType, Class<T> t) {
         try {
-            return mapSchoolsFromJSON(getJSONFromAPI(schoolsUrlString));
+            String getRequestString;
+            if (t == GameDataDto[].class) {
+                getRequestString = gamesUrlString[0] + "&week=" + week + seasonType + gamesUrlString[1];
+            } else if (t == FixtureDto[].class) {
+                getRequestString = teamGamesUrlString + seasonType + "&week=" + week;
+            } else if (t == SchoolDto[].class) {
+                getRequestString = schoolsUrlString;
+            } else {
+                throw new IllegalArgumentException("Cannot not create Dto.Class from Get request");
+            }
+            return mapDataFromJSON(getJSONFromAPI(getRequestString), t);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private FixtureDto[] sendGetRequestForWeekFixtures(int week, String seasonType) {
-        try {
-            return mapWeekFromJSON(getJSONFromAPI(teamGamesUrlString + seasonType + "&week=" + week));
-        } catch (IOException e) {
-            throw new RuntimeException();
-        }
+    private <T> T sendGetRequest(Class<T> t) {
+        return sendGetRequest(-1, null, t);
     }
 
-    private GameDataDto[] sendGetRequestForWeekGameData(int week, String seasonType) {
-        try {
-            return mapGameDataFromJSON(getJSONFromAPI(gamesUrlString[0] + "&week=" + week + seasonType + gamesUrlString[1]));
-        } catch (IOException e) {
-            throw new RuntimeException();
-        }
+    private <T> T mapDataFromJSON(String jsonString, Class<T> t) throws JsonProcessingException {
+        return mapper.readValue(jsonString, t);
     }
 
-
-    private List<SchoolDto> mapSchoolsFromJSON(String jsonString) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(jsonString, new TypeReference<>() {
-        });
-    }
-
-    private FixtureDto[] mapWeekFromJSON(String jsonString) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(jsonString, FixtureDto[].class);
-    }
-
-    private GameDataDto[] mapGameDataFromJSON(String jsonString) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(jsonString, GameDataDto[].class);
-    }
-
-    private String getJSONFromAPI(String s) throws IOException {
-        return APICaller.INSTANCE.getJSONFromAPICall(s, "gLQdG5n7YtiTjzu/bxxxd" +
-                "+rdzzrhWftHTtIH7PAGVWlAQMOAA7h2ria3ai2Dl9zc");
+    private String getJSONFromAPI(String url) throws IOException {
+        String bearer = "gLQdG5n7YtiTjzu/bxxxd+rdzzrhWftHTtIH7PAGVWlAQMOAA7h2ria3ai2Dl9zc";
+        return APICaller.INSTANCE.getJSONFromAPICall(url, bearer);
     }
 }

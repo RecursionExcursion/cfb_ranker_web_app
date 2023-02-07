@@ -42,11 +42,11 @@ public class LocalMemoryRepoController {
     }
 
     public List<List<StatisticizedTeam_2>> retrieveData() {
-        LocalMemoryController<Schools> listLocalMemoryController = new LocalMemoryController<>();
-        if (listLocalMemoryController.fileExists()) {
-            schoolList.loadSchools(listLocalMemoryController.load());
+        LocalMemoryRepo<Schools> listLocalMemoryRepo = new LocalMemoryRepo<>();
+        if (listLocalMemoryRepo.fileExists()) {
+            schoolList.loadSchools(listLocalMemoryRepo.load());
         } else {
-            listLocalMemoryController.save((getSchoolsFromAPI()));
+            listLocalMemoryRepo.save((getSchoolsFromAPI()));
         }
         return new WeeklyRanker().getRankings();
     }
