@@ -2,12 +2,12 @@ package com.foofinc.cfb_ranker.service.entity;
 
 import com.foofinc.cfb_ranker.repository.model.Game;
 
-public class GameToStatTeamMapper_2 {
+public class GameToStatTeamMapper {
 
-    private final StatisticizedTeam_2 team_2;
+    private final StatisticizedTeam team_2;
 
 
-    public GameToStatTeamMapper_2(Game game, StatisticizedTeam_2 team_2) {
+    public GameToStatTeamMapper(Game game, StatisticizedTeam team_2) {
         this.team_2 = team_2;
         getStatsFromGame(game);
     }
@@ -40,7 +40,7 @@ public class GameToStatTeamMapper_2 {
     }
 
 
-    public StatisticizedTeam_2 getCompleteTeam() {
+    public StatisticizedTeam getCompleteTeam() {
         return team_2;
     }
 }

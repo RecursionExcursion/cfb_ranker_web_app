@@ -7,7 +7,7 @@ import com.foofinc.cfb_ranker.repository.model.School;
 import java.util.List;
 import java.util.Optional;
 
-public class StatisticizedTeam_2 {
+public class StatisticizedTeam {
 
     private School school;
     private int rank;
@@ -32,7 +32,7 @@ public class StatisticizedTeam_2 {
     private int gamesPlayed;
 
 
-    public StatisticizedTeam_2(School school) {
+    public StatisticizedTeam(School school) {
         this.school = school;
         rank = 0;
         record = new Record();
@@ -50,8 +50,8 @@ public class StatisticizedTeam_2 {
         gamesPlayed = 0;
     }
 
-    public static StatisticizedTeam_2 createTeam(School s) {
-        return new StatisticizedTeam_2(s);
+    public static StatisticizedTeam createTeam(School s) {
+        return new StatisticizedTeam(s);
     }
 
     public School getSchool() {
@@ -138,39 +138,39 @@ public class StatisticizedTeam_2 {
     /*
     Methods used to calculate Strength of schedule
      */
-    public double calculateStrengthOfSchedulePerGame(List<StatisticizedTeam_2> partiallyRankedTeams) {
+    public double calculateStrengthOfSchedulePerGame(List<StatisticizedTeam> partiallyRankedTeams) {
         strengthOfSchedulePerGame = (double) getStrengthOfSchedule(partiallyRankedTeams) / gamesPlayed;
         return strengthOfSchedulePerGame;
     }
 
-    public int getStrengthOfSchedule(List<StatisticizedTeam_2> partiallyRankedTeams) {
+    public int getStrengthOfSchedule(List<StatisticizedTeam> partiallyRankedTeams) {
         return calculateStrengthOfSchedule(partiallyRankedTeams);
 
     }
 
-    private int calculateStrengthOfSchedule(List<StatisticizedTeam_2> partiallyRankedTeams) {
+    private int calculateStrengthOfSchedule(List<StatisticizedTeam> partiallyRankedTeams) {
         int schedStr = 0;
 
-        List<StatisticizedTeam_2> allTeams = Teams_2.INSTANCE.getTeams();
+        List<StatisticizedTeam> allTeams = Teams.INSTANCE.getTeams();
 
         for (int i = 0; i < gamesPlayed; i++) {
             Game game = school.getSchedule()
                               .get(i);
 
-            StatisticizedTeam_2 opponent = null;
+            StatisticizedTeam opponent = null;
 
             School homeTeam = game.getHome();
             School awayTeam = game.getAway();
 
             if (homeTeam == this.school) {
-                for (StatisticizedTeam_2 ct : allTeams) {
+                for (StatisticizedTeam ct : allTeams) {
                     if (ct.getSchool() == awayTeam) {
                         opponent = ct;
                         break;
                     }
                 }
             } else {
-                for (StatisticizedTeam_2 ct : allTeams) {
+                for (StatisticizedTeam ct : allTeams) {
                     if (ct.getSchool() == homeTeam) {
                         opponent = ct;
                         break;
@@ -178,10 +178,10 @@ public class StatisticizedTeam_2 {
                 }
             }
 
-            Optional<StatisticizedTeam_2> optionalOpponents =
+            Optional<StatisticizedTeam> optionalOpponents =
                     Optional.of(Optional.ofNullable(opponent)
-                                        .orElseGet(() -> new StatisticizedTeam_2(new School(-1, "Null Team", "Nullables",
-                                                                                            "Null"))));
+                                        .orElseGet(() -> new StatisticizedTeam(new School(-1, "Null Team", "Nullables",
+                                                                                          "Null"))));
             opponent = optionalOpponents.get();
 
 

@@ -27,21 +27,21 @@ public class WeeklyRanker {
     List<School> schools = SchoolList.INSTANCE.getSchoolsAsList();
 
 
-    List<StatisticizedTeam_2> statisticizedTeam_2List = schools.stream()
-                                                               .map(StatisticizedTeam_2::createTeam)
-                                                               .toList();
+    List<StatisticizedTeam> statisticizedTeam_List = schools.stream()
+                                                            .map(StatisticizedTeam::createTeam)
+                                                            .toList();
 
 
-    List<List<StatisticizedTeam_2>> weeklyRankings = new ArrayList<>();
+    List<List<StatisticizedTeam>> weeklyRankings = new ArrayList<>();
 
-    public List<List<StatisticizedTeam_2>> getRankings() {
-        Teams_2.INSTANCE.loadTeams(statisticizedTeam_2List);
+    public List<List<StatisticizedTeam>> getRankings() {
+        Teams.INSTANCE.loadTeams(statisticizedTeam_List);
         initialize();
         return weeklyRankings;
     }
 
     private void initialize() {
-        List<StatisticizedTeam_2> lastWeek = null;
+        List<StatisticizedTeam> lastWeek = null;
 
         String regularSeason = "regular";
         String postSeason = "postseason";
@@ -55,9 +55,9 @@ public class WeeklyRanker {
         rankAndAddTeamsToList(lastWeek);
     }
 
-    private void rankAndAddTeamsToList(List<StatisticizedTeam_2> lastWeek) {
-        List<StatisticizedTeam_2> statisticizedTeam2s =
-                new RankingAlgo_2(statisticizedTeam_2List, lastWeek).rankAndGetTeams();
+    private void rankAndAddTeamsToList(List<StatisticizedTeam> lastWeek) {
+        List<StatisticizedTeam> statisticizedTeam2s =
+                new RankingAlgo(statisticizedTeam_List, lastWeek).rankAndGetTeams();
         weeklyRankings.add(statisticizedTeam2s);
     }
 
@@ -66,22 +66,22 @@ public class WeeklyRanker {
         List<Game> gamesForWeek = getGamesForWeek(week, seasonType);
 
         for (Game g : gamesForWeek) {
-            StatisticizedTeam_2 homeTeam = findStatTeamFromSchool(g.getHome());
-            StatisticizedTeam_2 awayTeam = findStatTeamFromSchool(g.getAway());
+            StatisticizedTeam homeTeam = findStatTeamFromSchool(g.getHome());
+            StatisticizedTeam awayTeam = findStatTeamFromSchool(g.getAway());
 
             if (homeTeam != null) {
-                new GameToStatTeamMapper_2(g, homeTeam);
+                new GameToStatTeamMapper(g, homeTeam);
             }
             if (awayTeam != null) {
-                new GameToStatTeamMapper_2(g, awayTeam);
+                new GameToStatTeamMapper(g, awayTeam);
             }
         }
 
 
     }
 
-    private StatisticizedTeam_2 findStatTeamFromSchool(School school) {
-        for (StatisticizedTeam_2 st : statisticizedTeam_2List) {
+    private StatisticizedTeam findStatTeamFromSchool(School school) {
+        for (StatisticizedTeam st : statisticizedTeam_List) {
             if (st.getSchool() == school) return st;
         }
         return null;

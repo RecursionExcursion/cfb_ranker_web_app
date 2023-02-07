@@ -1,15 +1,15 @@
 package com.foofinc.cfb_ranker.service.dto;
 
-import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam_2;
+import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam;
 
 import java.util.List;
 
 public class RankingDtoMapper {
 
-    private final List<List<StatisticizedTeam_2>> rankedTeams;
+    private final List<List<StatisticizedTeam>> rankedTeams;
 
 
-    public RankingDtoMapper(List<List<StatisticizedTeam_2>> rankedTeams) {
+    public RankingDtoMapper(List<List<StatisticizedTeam>> rankedTeams) {
         this.rankedTeams = rankedTeams;
     }
 
@@ -33,7 +33,7 @@ public class RankingDtoMapper {
         return rankingsDto;
     }
 
-    private RankingsDto.SchoolDto mapTeamToDto(StatisticizedTeam_2 statisticizedTeam2) {
+    private RankingsDto.SchoolDto mapTeamToDto(StatisticizedTeam statisticizedTeam2) {
         RankingsDto.SchoolDto schoolDto = new RankingsDto.SchoolDto();
         schoolDto.setSchoolName(statisticizedTeam2.getSchool()
                                                   .getSchoolNameString());

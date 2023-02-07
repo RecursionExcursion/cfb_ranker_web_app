@@ -1,9 +1,12 @@
 package com.foofinc.cfb_ranker.service.dto;
 
+/*
+ *Json package ready dto to be passed by the controller to the caller
+ * DS is a 2d Array[x][y], where x is the week -1 and y is the ranking - 1 of the team held in the element
+ */
 public class RankingsDto {
 
     SchoolDto[][] weeklyRankings;
-
 
     public RankingsDto(int x, int y) {
         this.weeklyRankings = new SchoolDto[x][y];

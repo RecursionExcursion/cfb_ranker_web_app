@@ -24,7 +24,6 @@ enum APICaller {
         conn.connect();
 
         int respCode = conn.getResponseCode();
-
         if (respCode != 200) {
             throw new RuntimeException("Http Response Code- " + respCode);
         } else {

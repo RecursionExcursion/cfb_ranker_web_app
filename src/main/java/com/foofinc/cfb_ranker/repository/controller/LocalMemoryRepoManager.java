@@ -7,15 +7,15 @@ import com.foofinc.cfb_ranker.repository.model.ModelGenerator;
 import com.foofinc.cfb_ranker.repository.model.School;
 import com.foofinc.cfb_ranker.repository.model.SchoolList;
 import com.foofinc.cfb_ranker.repository.model.Schools;
-import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam_2;
+import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam;
 import com.foofinc.cfb_ranker.service.entity.WeeklyRanker;
 
 import java.util.List;
 import java.util.Map;
 
-public class LocalMemoryRepoController {
+public class LocalMemoryRepoManager {
 
-    private static LocalMemoryRepoController instance;
+    private static LocalMemoryRepoManager instance;
 
     //API to access CFB JSON
     private CfbApiAccess cfbApi;
@@ -26,7 +26,7 @@ public class LocalMemoryRepoController {
     //DS holding weeks worth of Fixtures(Jackson DS). (Ex. Week 1, Week 2, etc...)
     private List<Map<Long, CompleteGameDto>> weeks;
 
-    private LocalMemoryRepoController() {
+    private LocalMemoryRepoManager() {
 
     }
 
@@ -36,12 +36,12 @@ public class LocalMemoryRepoController {
     //TODO Implement ability to update based on date.
      */
 
-    public static LocalMemoryRepoController getInstance() {
-        if (instance == null) instance = new LocalMemoryRepoController();
+    public static LocalMemoryRepoManager getInstance() {
+        if (instance == null) instance = new LocalMemoryRepoManager();
         return instance;
     }
 
-    public List<List<StatisticizedTeam_2>> retrieveData() {
+    public List<List<StatisticizedTeam>> retrieveData() {
         LocalMemoryRepo<Schools> listLocalMemoryRepo = new LocalMemoryRepo<>();
         if (listLocalMemoryRepo.fileExists()) {
             schoolList.loadSchools(listLocalMemoryRepo.load());

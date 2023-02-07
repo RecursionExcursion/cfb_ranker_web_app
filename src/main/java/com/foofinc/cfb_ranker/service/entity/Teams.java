@@ -6,17 +6,17 @@ import java.util.List;
 /*
 Singleton wrapper class
  */
-public enum Teams_2 {
+public enum Teams {
 
     INSTANCE;
 
-    private List<StatisticizedTeam_2> statisticizedTeams = new ArrayList<>();
+    private List<StatisticizedTeam> statisticizedTeams = new ArrayList<>();
 
-    public List<StatisticizedTeam_2> getTeams() {
+    public List<StatisticizedTeam> getTeams() {
         return statisticizedTeams;
     }
 
-    public void loadTeams(List<StatisticizedTeam_2> t) {
+    public void loadTeams(List<StatisticizedTeam> t) {
         statisticizedTeams = t;
 
     }
