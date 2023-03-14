@@ -10,7 +10,6 @@ class LocalMemoryRepo<T extends Serializable> {
     private final String filePath = "src/main/java/com/foofinc/cfb_ranker/repository/persistence/fbs_data/team_data";
     private final MemorySerializationManager<T> memorySerializationManager = new MemorySerializationManager<>(filePath);
 
-
     LocalMemoryRepo() {
     }
 

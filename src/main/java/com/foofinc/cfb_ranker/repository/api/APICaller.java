@@ -18,7 +18,9 @@ enum APICaller {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        conn.setRequestProperty("Authorization", "Bearer " + bearer);
+        if(bearer != null){
+            conn.setRequestProperty("Authorization", "Bearer " + bearer);
+        }
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestMethod("GET");
         conn.connect();

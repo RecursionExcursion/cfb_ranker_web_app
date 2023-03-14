@@ -5,7 +5,7 @@ This class is a Data Structure used to hold data of multiple Jackson's objectmap
 POJO to hold games from weekly-games and team-games JSON
 This class will be used to map this data to 'Game objects
  */
-public class CompleteGameDto implements DTO{
+public class CompleteGameDto implements DTO {
     private long id;
     private FixtureDto fixtureDto;
     private GameDataDto gameDataDto;
@@ -39,10 +39,10 @@ public class CompleteGameDto implements DTO{
         this.gameDataDto = gameDataDto;
     }
 
-    /*
-    Will return true if neither team is in FBS
+    /**
+     * Will return true if neither team is in FBS
      */
-    public boolean hasNullData(){
+    public boolean hasNullData() {
         return fixtureDto == null || gameDataDto == null;
     }
 }

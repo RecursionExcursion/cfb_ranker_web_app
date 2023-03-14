@@ -57,6 +57,9 @@ public class RankingAlgo {
         setWeight();
 
         setRankings(rankedTeams);
+        rankedTeams = rankedTeams.stream()
+                                 .sorted(Comparator.comparingDouble(StatisticizedTeam::getWeight))
+                                 .toList();
         return rankedTeams;
     }
 

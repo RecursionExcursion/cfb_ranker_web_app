@@ -13,6 +13,11 @@ import com.foofinc.cfb_ranker.service.entity.WeeklyRanker;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Checks local memory for file and loads the serialized data to minimize calls to the CFB API
+ * If the file does not exist then this method will make the api calls and serialize the data into memory.
+ * //TODO Implement ability to update based on date.
+ */
 public class LocalMemoryRepoManager {
 
     private static LocalMemoryRepoManager instance;
@@ -27,14 +32,7 @@ public class LocalMemoryRepoManager {
     private List<Map<Long, CompleteGameDto>> weeks;
 
     private LocalMemoryRepoManager() {
-
     }
-
-    /*
-    Checks local memory for file and loads the serialized data to minimize calls to the CFB API
-    If the file does not exist then this method will make the api calls and serialize the data into memory.
-    //TODO Implement ability to update based on date.
-     */
 
     public static LocalMemoryRepoManager getInstance() {
         if (instance == null) instance = new LocalMemoryRepoManager();
@@ -73,7 +71,6 @@ public class LocalMemoryRepoManager {
     /*
     Generates games and adds them to the School model objects
      */
-
     private void parseGames() {
         for (Map<Long, CompleteGameDto> week : weeks) {
             for (Long id : week.keySet()) {
