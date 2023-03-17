@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.foofinc.cfb_ranker.repository.abstract_models.AbstractFixture;
 import com.foofinc.cfb_ranker.repository.abstract_models.AbstractGameData;
 import com.foofinc.cfb_ranker.repository.api.dto.*;
-import com.foofinc.cfb_ranker.repository.model.new_models.SerializableSeason;
-import com.foofinc.cfb_ranker.repository.model.new_models.SerializableGame;
-import com.foofinc.cfb_ranker.repository.model.new_models.SerializableSchool;
+import com.foofinc.cfb_ranker.repository.model.SerializableGame;
+import com.foofinc.cfb_ranker.repository.model.SerializableSchool;
+import com.foofinc.cfb_ranker.repository.model.SerializableSeason;
 
 import java.io.IOException;
 import java.util.ArrayList;

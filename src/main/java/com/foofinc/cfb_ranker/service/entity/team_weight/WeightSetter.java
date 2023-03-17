@@ -1,5 +1,6 @@
 package com.foofinc.cfb_ranker.service.entity.team_weight;
 
+import com.foofinc.cfb_ranker.service.entity.StatWeight;
 import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam;
 
 import java.util.HashMap;
@@ -10,11 +11,14 @@ abstract class WeightSetter {
 
     protected int multiplier;
     protected List<StatisticizedTeam> rankedTeams;
+    protected StatWeight statWeight = StatWeight.getInstance();
 
-    public WeightSetter(int multiplier, List<StatisticizedTeam> teams) {
-        this.multiplier = multiplier;
+    WeightSetter(List<StatisticizedTeam> teams) {
+        this.multiplier = getMultiplierWeight();
         this.rankedTeams = rankTeams(teams);
     }
+
+    protected abstract int getMultiplierWeight();
 
     protected abstract List<StatisticizedTeam> rankTeams(List<StatisticizedTeam> teams);
 

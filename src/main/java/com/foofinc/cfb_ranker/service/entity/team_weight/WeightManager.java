@@ -12,24 +12,24 @@ public class WeightManager {
         return new ArrayList<>(
                 List.of(
                         //Wins/Losses
-                        new WinWeightSetter(1, unweightedTeams).getWeightOfRankings(),
-                        new LossWeighSetter(1, unweightedTeams).getWeightOfRankings(),
+                        new WinWeightSetter(unweightedTeams).getWeightOfRankings(),
+                        new LossWeightSetter(unweightedTeams).getWeightOfRankings(),
 
                         //Off/Def
-                        new OffenseWeightSetter(1, unweightedTeams).getWeightOfRankings(),
-                        new DefenseWeightSetter(1, unweightedTeams).getWeightOfRankings(),
+                        new OffenseWeightSetter(unweightedTeams).getWeightOfRankings(),
+                        new DefenseWeightSetter(unweightedTeams).getWeightOfRankings(),
 
                         //Points
-                        new PointsForWeightSetter(1, unweightedTeams).getWeightOfRankings(),
-                        new PointsAllowedWeightSetter(1, unweightedTeams).getWeightOfRankings()
+                        new PointsForWeightSetter(unweightedTeams).getWeightOfRankings(),
+                        new PointsAllowedWeightSetter(unweightedTeams).getWeightOfRankings()
                 ));
     }
 
     public Map<StatisticizedTeam, Double> getPollInertiaMap(List<StatisticizedTeam> lastWeeksPolls) {
-        return new PollInteriaWeightSetter(1, lastWeeksPolls).getWeightOfRankings();
+        return new PollInteriaWeightSetter(lastWeeksPolls).getWeightOfRankings();
     }
 
     public Map<StatisticizedTeam, Double> getStrengthOfScheduleMap(List<StatisticizedTeam> weightedTeams) {
-        return new StrengthOfScheduleWeightSetter(1, weightedTeams).getWeightOfRankings();
+        return new StrengthOfScheduleWeightSetter(weightedTeams).getWeightOfRankings();
     }
 }

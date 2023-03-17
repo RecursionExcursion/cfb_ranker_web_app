@@ -6,8 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 
 class PointsForWeightSetter extends WeightSetter {
-    PointsForWeightSetter(int multiplier, List<StatisticizedTeam> teams) {
-        super(multiplier, teams);
+    PointsForWeightSetter( List<StatisticizedTeam> teams) {
+        super( teams);
+    }
+
+    @Override
+    protected int getMultiplierWeight() {
+        return statWeight.getPointsForWeight();
     }
 
     @Override

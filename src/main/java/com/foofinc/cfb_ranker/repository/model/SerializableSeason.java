@@ -1,4 +1,4 @@
-package com.foofinc.cfb_ranker.repository.model.new_models;
+package com.foofinc.cfb_ranker.repository.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

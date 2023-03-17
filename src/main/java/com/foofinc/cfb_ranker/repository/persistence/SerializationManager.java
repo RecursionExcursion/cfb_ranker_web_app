@@ -1,6 +1,6 @@
 package com.foofinc.cfb_ranker.repository.persistence;
 
-import com.foofinc.cfb_ranker.repository.model.new_models.SerializableSeason;
+import com.foofinc.cfb_ranker.repository.model.SerializableSeason;
 
 /**
  * Manager of ObjectSerializer

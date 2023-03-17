@@ -2,14 +2,14 @@ package com.foofinc.cfb_ranker.service.entity;
 
 import com.foofinc.cfb_ranker.repository.abstract_models.AbstractStats;
 import com.foofinc.cfb_ranker.repository.abstract_models.AbstractTeam;
-import com.foofinc.cfb_ranker.repository.model.new_models.SerializableGame;
+import com.foofinc.cfb_ranker.repository.model.SerializableGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
-public class StatCompiler
-{
+public class StatCompiler {
     public static void CompileStatsForTeam(SerializableGame game, StatisticizedTeam team) {
 
         AbstractTeam thisTeam = AbstractTeam.getTeamFromStatGame(game, team);
@@ -36,17 +36,16 @@ public class StatCompiler
         String oppYards;
 
         try {
-            teamYards =
-                    Arrays.stream(thisTeam.getStats())
-                          .filter(stat -> stat.getCategory().equals(totalYards))
-                          .map(AbstractStats::getStat)
-                            .findFirst().orElseThrow();
 
-            oppYards =
-                    Arrays.stream(oppTeam.getStats())
+            Function<AbstractTeam, String> getYardsFromAbstractTeam = (abstractTeam) ->
+                    Arrays.stream(abstractTeam.getStats())
                           .filter(stat -> stat.getCategory().equals(totalYards))
                           .map(AbstractStats::getStat)
                           .findFirst().orElseThrow();
+
+            teamYards = getYardsFromAbstractTeam.apply(thisTeam);
+            oppYards = getYardsFromAbstractTeam.apply(oppTeam);
+
 
         } catch (Exception e) {
             String gameInfoString = String.format("Data is missing from a data structure, %s week %s",

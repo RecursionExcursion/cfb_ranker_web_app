@@ -1,4 +1,4 @@
-package com.foofinc.cfb_ranker.repository.model.new_models;
+package com.foofinc.cfb_ranker.repository.model;
 
 import com.foofinc.cfb_ranker.repository.abstract_models.AbstractSchool;
 

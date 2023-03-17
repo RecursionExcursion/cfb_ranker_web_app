@@ -1,4 +1,5 @@
-package com.foofinc.cfb_ranker.repository.model.new_models;
+package com.foofinc.cfb_ranker.repository.model
+        ;
 
 import com.foofinc.cfb_ranker.repository.abstract_models.AbstractFixture;
 import com.foofinc.cfb_ranker.repository.api.dto.TeamDto;

@@ -6,8 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 
 class WinWeightSetter extends WeightSetter {
-    WinWeightSetter(int multiplier, List<StatisticizedTeam> teams) {
-        super(multiplier, teams);
+    WinWeightSetter(List<StatisticizedTeam> teams) {
+        super(teams);
+    }
+
+    @Override
+    protected int getMultiplierWeight() {
+        return statWeight.getWinWeight();
     }
 
     @Override

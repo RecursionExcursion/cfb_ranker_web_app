@@ -1,22 +1,22 @@
 package com.foofinc.cfb_ranker.service.entity;
 
 import com.foofinc.cfb_ranker.repository.abstract_models.AbstractTeam;
-import com.foofinc.cfb_ranker.repository.model.new_models.SerializableGame;
-import com.foofinc.cfb_ranker.repository.model.new_models.SerializableSchool;
-import com.foofinc.cfb_ranker.repository.model.new_models.SerializableSeason;
+import com.foofinc.cfb_ranker.repository.model.SerializableGame;
+import com.foofinc.cfb_ranker.repository.model.SerializableSchool;
+import com.foofinc.cfb_ranker.repository.model.SerializableSeason;
 import com.foofinc.cfb_ranker.service.entity.team_weight.*;
 
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class RankingAlgo2 {
+public class RankingAlgorithm {
 
     private final RankedSeason rankedSeason = new RankedSeason();
     private final RankedSeason weightedRankedSeason = new RankedSeason();
-    SerializableSeason season;
+    private final SerializableSeason season;
 
-    public RankingAlgo2(SerializableSeason season) {
+    public RankingAlgorithm(SerializableSeason season) {
         this.season = season;
     }
 
@@ -77,15 +77,11 @@ public class RankingAlgo2 {
                                                                                                             .getId())
                                                                   .findFirst();
                 weight += pollInteriaMap.get(first.orElseThrow());
-
-
             }
             weightedTeam.setWeight(weight);
         }
 
-        weightedTeams = weightedTeams.stream()
-                                     .sorted(Comparator.comparingDouble(StatisticizedTeam::getWeight))
-                                     .toList();
+        weightedTeams = rankTeamsByWeight(weightedTeams);
 
         calculateStrengthOfSchedule(weightedTeams);
 
@@ -93,13 +89,17 @@ public class RankingAlgo2 {
 
         weightedTeams.forEach(wt -> wt.setWeight(wt.getWeight() + weightedTeamsMap.get(wt)));
 
-        weightedTeams = weightedTeams.stream()
-                                     .sorted(Comparator.comparingDouble(StatisticizedTeam::getWeight))
-                                     .toList();
+        weightedTeams = rankTeamsByWeight(weightedTeams);
 
         setRankings(weightedTeams);
 
         return weightedTeams;
+    }
+
+    private static List<StatisticizedTeam> rankTeamsByWeight(List<StatisticizedTeam> weightedTeams) {
+        return weightedTeams.stream()
+                            .sorted(Comparator.comparingDouble(StatisticizedTeam::getWeight))
+                            .toList();
     }
 
     private List<StatisticizedTeam> linkTeamsToGames(int i, String seasonType) {

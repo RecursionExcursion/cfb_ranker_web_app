@@ -6,8 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 
 class DefenseWeightSetter extends WeightSetter {
-    DefenseWeightSetter(int multiplier, List<StatisticizedTeam> teams) {
-        super(multiplier, teams);
+    DefenseWeightSetter( List<StatisticizedTeam> teams) {
+        super( teams);
+    }
+
+    @Override
+    protected int getMultiplierWeight() {
+        return statWeight.getDefensiveYardsWeight();
     }
 
     @Override

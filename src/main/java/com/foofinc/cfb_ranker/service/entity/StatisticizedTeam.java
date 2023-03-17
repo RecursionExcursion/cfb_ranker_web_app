@@ -1,8 +1,8 @@
 package com.foofinc.cfb_ranker.service.entity;
 
 
-import com.foofinc.cfb_ranker.repository.model.new_models.SerializableGame;
-import com.foofinc.cfb_ranker.repository.model.new_models.SerializableSchool;
+import com.foofinc.cfb_ranker.repository.model.SerializableGame;
+import com.foofinc.cfb_ranker.repository.model.SerializableSchool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,6 @@ public class StatisticizedTeam {
     private int pointsFor;
 
     private int strengthOfSchedule;
-    private double strengthOfSchedulePerGame;
 
     private int gamesPlayed;
 
@@ -37,7 +36,6 @@ public class StatisticizedTeam {
         pointsFor = 0;
         strengthOfSchedule = 0;
         weight = 0.0;
-        strengthOfSchedulePerGame = -1.0;
         gamesPlayed = 0;
         schedule = new ArrayList<>();
     }
@@ -52,7 +50,6 @@ public class StatisticizedTeam {
         this.pointsFor = oldTeam.getPointsFor();
         this.strengthOfSchedule = -1;
         this.weight = 0.0;
-        this.strengthOfSchedulePerGame = 1.0;
         this.gamesPlayed = oldTeam.getGamesPlayed();
         schedule = new ArrayList<>(oldTeam.getSchedule());
     }
@@ -73,9 +70,7 @@ public class StatisticizedTeam {
         return weight;
     }
 
-    /*
-                Adder Methods
-                 */
+    /*Adder Methods*/
     public void addToTotalOffense(int offense) {
         this.totalOffense += offense;
     }
@@ -92,9 +87,6 @@ public class StatisticizedTeam {
         this.pointsFor += pointsFor;
     }
 
-    public void addGamesPlayed() {
-        gamesPlayed++;
-    }
 
     /*
     Getter Methods- Method names are tightly coupled to Ranking Algo Strings
@@ -162,65 +154,10 @@ public class StatisticizedTeam {
          return (double) strengthOfSchedule / getGamesPlayed();
     }
 
-    /*
-    Methods used to calculate Strength of schedule
-     */
-//    public double calculateStrengthOfSchedulePerGame(List<StatisticizedTeam> partiallyRankedTeams) {
-//        strengthOfSchedulePerGame = (double) getStrengthOfSchedule(partiallyRankedTeams) / gamesPlayed;
-//        return strengthOfSchedulePerGame;
-//    }
-
     public int getStrengthOfSchedule() {
         return strengthOfSchedule;
 
     }
-//
-//    private int calculateStrengthOfSchedule(List<StatisticizedTeam> partiallyRankedTeams) {
-//        int schedStr = 0;
-//
-//        List<StatisticizedTeam> allTeams = Teams.INSTANCE.getTeams();
-//
-//        for (int i = 0; i < gamesPlayed; i++) {
-////            Game game = school.getSchedule()
-////                              .get(i);
-//
-//            StatisticizedTeam opponent = null;
-//
-////            School homeTeam = game.getHome();
-////            School awayTeam = game.getAway();
-//
-////            if (homeTeam == this.school) {
-////                for (StatisticizedTeam ct : allTeams) {
-////                    if (ct.getSchool() == awayTeam) {
-////                        opponent = ct;
-////                        break;
-////                    }
-////                }
-////            } else {
-////                for (StatisticizedTeam ct : allTeams) {
-////                    if (ct.getSchool() == homeTeam) {
-////                        opponent = ct;
-////                        break;
-////                    }
-////                }
-////            }
-////
-////            Optional<StatisticizedTeam> optionalOpponents =
-////                    Optional.of(Optional.ofNullable(opponent)
-////                                        .orElseGet(() -> new StatisticizedTeam(new School(-1, "Null Team", "Nullables",
-////                                                                                          "Null"))));
-////            opponent = optionalOpponents.get();
-//
-//
-//            int index = partiallyRankedTeams.indexOf(opponent);
-//            int oppStrength = index == -1 ? 132 : index + 1;
-//
-//
-//            schedStr += oppStrength;
-//
-//        }
-//        return schedStr;
-//    }
 
     /*
     Setter Methods
@@ -237,13 +174,6 @@ public class StatisticizedTeam {
         this.weight = weight;
     }
 
-    /*
-    Utility Methods
-     */
-
-    private String formatDouble(double num) {
-        return String.format("%.2f", num);
-    }
 
     /*
     Nested Classes
@@ -277,10 +207,5 @@ public class StatisticizedTeam {
         public void incLoses() {
             losses++;
         }
-
-        void setLosses(int losses) {
-            this.losses = losses;
-        }
-
     }
 }

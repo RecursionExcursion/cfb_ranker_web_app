@@ -7,8 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 class PollInteriaWeightSetter extends WeightSetter {
-    PollInteriaWeightSetter(int multiplier, List<StatisticizedTeam> teams) {
-        super(multiplier, teams);
+    PollInteriaWeightSetter( List<StatisticizedTeam> teams) {
+        super( teams);
+    }
+
+    @Override
+    protected int getMultiplierWeight() {
+        return statWeight.getPollInertiaWeight();
     }
 
     @Override

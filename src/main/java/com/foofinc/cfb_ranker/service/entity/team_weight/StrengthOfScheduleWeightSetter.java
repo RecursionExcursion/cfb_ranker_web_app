@@ -6,8 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 
 class StrengthOfScheduleWeightSetter extends WeightSetter {
-    StrengthOfScheduleWeightSetter(int multiplier, List<StatisticizedTeam> teams) {
-        super(multiplier, teams);
+    StrengthOfScheduleWeightSetter( List<StatisticizedTeam> teams) {
+        super(teams);
+    }
+
+    @Override
+    protected int getMultiplierWeight() {
+        return statWeight.getStrengthOfScheduleWeight();
     }
 
     @Override

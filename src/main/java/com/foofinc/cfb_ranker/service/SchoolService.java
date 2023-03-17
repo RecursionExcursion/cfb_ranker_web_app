@@ -1,9 +1,9 @@
 package com.foofinc.cfb_ranker.service;
 
 import com.foofinc.cfb_ranker.repository.SchoolsRepository;
-import com.foofinc.cfb_ranker.repository.model.new_models.SerializableSeason;
+import com.foofinc.cfb_ranker.repository.model.SerializableSeason;
 import com.foofinc.cfb_ranker.service.entity.RankedSeason;
-import com.foofinc.cfb_ranker.service.entity.RankingAlgo2;
+import com.foofinc.cfb_ranker.service.entity.RankingAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +19,7 @@ public class SchoolService {
 
     public RankedSeason getTeams() {
         SerializableSeason teams = schoolsRepository.getTeams();
-        RankedSeason rankedSeason = new RankingAlgo2(teams).rankAndGetTeams();
+        RankedSeason rankedSeason = new RankingAlgorithm(teams).rankAndGetTeams();
         return rankedSeason;
-//        return new RankingDtoMapper(rankedSeason).mapRankingsToDto();
     }
 }

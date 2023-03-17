@@ -6,8 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 
 class OffenseWeightSetter extends WeightSetter {
-    OffenseWeightSetter(int multiplier, List<StatisticizedTeam> teams) {
-        super(multiplier, teams);
+    OffenseWeightSetter( List<StatisticizedTeam> teams) {
+        super(teams);
+    }
+
+    @Override
+    protected int getMultiplierWeight() {
+        return statWeight.getOffensiveYardsWeight();
     }
 
     @Override

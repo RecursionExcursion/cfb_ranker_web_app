@@ -2,19 +2,19 @@ package com.foofinc.cfb_ranker.repository.persistence;
 
 import java.io.*;
 
-public class ObjectSerializer<T extends Serializable> {
+class ObjectSerializer<T extends Serializable> {
 
     private final File filePath;
 
-    public ObjectSerializer(String filePath) {
+    ObjectSerializer(String filePath) {
         this.filePath = new File(filePath + ".ser");
     }
 
-    public T load() {
+    T load() {
         return deserialize(filePath);
     }
 
-    public void save(T object) {
+    void save(T object) {
         serialize(object, filePath);
     }
 
@@ -37,7 +37,7 @@ public class ObjectSerializer<T extends Serializable> {
         }
     }
 
-    public boolean fileExists() {
+    boolean fileExists() {
         return filePath.exists();
     }
 }
