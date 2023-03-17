@@ -1,6 +1,7 @@
 package com.foofinc.cfb_ranker.repository.abstract_models;
 
 import com.foofinc.cfb_ranker.repository.api.dto.StatsDto;
+import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -41,6 +42,20 @@ public abstract class AbstractTeam implements Serializable {
 
     public void setStats(StatsDto[] stats) {
         this.stats = stats;
+    }
+
+    public static AbstractTeam getTeamFromStatGame(AbstractGame game, StatisticizedTeam team) {
+        return Arrays.stream(game.getFixture().getTeams())
+                     .filter(t -> t.getSchool().equals(team.getSchool().getSchool()))
+                     .findFirst()
+                     .orElseThrow(() -> new IllegalArgumentException("Cannot find team"));
+    }
+
+    public static AbstractTeam getOpponentFromStatGame(AbstractGame game, StatisticizedTeam team) {
+        return Arrays.stream(game.getFixture().getTeams())
+                     .filter(t -> !t.getSchool().equals(team.getSchool().getSchool()))
+                     .findFirst()
+                     .orElseThrow(() -> new IllegalArgumentException("Cannot find team"));
     }
 
     @Override

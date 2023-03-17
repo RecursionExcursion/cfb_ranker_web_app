@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PollInteriaWeightSetter extends WeightSetter {
-    public PollInteriaWeightSetter(int multiplier, List<StatisticizedTeam> teams) {
+class PollInteriaWeightSetter extends WeightSetter {
+    PollInteriaWeightSetter(int multiplier, List<StatisticizedTeam> teams) {
         super(multiplier, teams);
     }
 

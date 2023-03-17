@@ -5,8 +5,8 @@ import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam;
 import java.util.Comparator;
 import java.util.List;
 
-public class LossWeighSetter extends WeightSetter {
-    public LossWeighSetter(int multiplier, List<StatisticizedTeam> teams) {
+class LossWeighSetter extends WeightSetter {
+    LossWeighSetter(int multiplier, List<StatisticizedTeam> teams) {
         super(multiplier, teams);
     }
 

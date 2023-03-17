@@ -24,9 +24,6 @@ public enum SerializationManager {
     //TODO *//*
 
     public SerializableSeason loadSeason() {
-
-        season = seasonSerializer.load();
-
         try {
             return seasonSerializer.load();
         } catch (Exception e) {

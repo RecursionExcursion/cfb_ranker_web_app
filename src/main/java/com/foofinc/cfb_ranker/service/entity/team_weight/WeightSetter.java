@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class WeightSetter {
+abstract class WeightSetter {
 
     protected int multiplier;
     protected List<StatisticizedTeam> rankedTeams;
@@ -20,8 +20,7 @@ public abstract class WeightSetter {
 
     protected abstract StatRecord invokeGetters(StatisticizedTeam indexedTeam, StatisticizedTeam lastTeam);
 
-
-    public Map<StatisticizedTeam, Double> getWeightOfRankings() {
+    Map<StatisticizedTeam, Double> getWeightOfRankings() {
 
         Map<StatisticizedTeam, Double> teamWeightMap = new HashMap<>();
 

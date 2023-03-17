@@ -1,7 +1,7 @@
 package com.foofinc.cfb_ranker.service.entity;
 
 import com.foofinc.cfb_ranker.repository.abstract_models.AbstractStats;
-import com.foofinc.cfb_ranker.repository.api.dto.TeamDto;
+import com.foofinc.cfb_ranker.repository.abstract_models.AbstractTeam;
 import com.foofinc.cfb_ranker.repository.model.new_models.SerializableGame;
 
 import java.util.ArrayList;
@@ -12,15 +12,8 @@ public class StatCompiler
 {
     public static void CompileStatsForTeam(SerializableGame game, StatisticizedTeam team) {
 
-        TeamDto thisTeam = Arrays.stream(game.getFixture().getTeams())
-                                 .filter(t -> t.getSchool().equals(team.getSchool().getSchool()))
-                                 .findFirst()
-                                 .orElseThrow(() -> new IllegalArgumentException("Cannot find team"));
-
-        TeamDto oppTeam = Arrays.stream(game.getFixture().getTeams())
-                                .filter(t -> !t.getSchool().equals(team.getSchool().getSchool()))
-                                .findFirst()
-                                .orElseThrow(() -> new IllegalArgumentException("Cannot find team"));
+        AbstractTeam thisTeam = AbstractTeam.getTeamFromStatGame(game, team);
+        AbstractTeam oppTeam = AbstractTeam.getOpponentFromStatGame(game, team);
 
         String totalYards = "totalYards";
 
@@ -82,7 +75,7 @@ public class StatCompiler
                     //Home Yards
                     "291",
                     //Away Yards
-                    "301"
+                    "306"
             };
 
             List<String[]> gamesWithoutStats = new ArrayList<>();
