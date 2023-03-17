@@ -1,14 +1,16 @@
 package com.foofinc.cfb_ranker.repository.abstract_models;
 
-public abstract class AbstractGameData {
-    private long id;
-    private int season;
-    private int week;
-    private String season_type;
-    private String start_date;
-    private boolean completed;
-    private int home_id;
-    private int away_id;
+import java.io.Serializable;
+
+public abstract class AbstractGameData implements Serializable {
+    protected long id;
+    protected int season;
+    protected int week;
+    protected String season_type;
+    protected String start_date;
+    protected boolean completed;
+    protected int home_id;
+    protected int away_id;
 
     public AbstractGameData() {
     }

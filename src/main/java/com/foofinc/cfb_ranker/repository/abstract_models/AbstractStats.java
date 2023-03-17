@@ -1,8 +1,10 @@
 package com.foofinc.cfb_ranker.repository.abstract_models;
 
-public abstract class AbstractStats {
-    private String category;
-    private String stat;
+import java.io.Serializable;
+
+public abstract class AbstractStats implements Serializable {
+    protected String category;
+    protected String stat;
 
     public AbstractStats() {
     }

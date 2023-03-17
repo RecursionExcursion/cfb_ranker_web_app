@@ -36,14 +36,14 @@ public class RankingDtoMapper {
     private RankingsDto.SchoolDto mapTeamToDto(StatisticizedTeam statisticizedTeam2) {
         RankingsDto.SchoolDto schoolDto = new RankingsDto.SchoolDto();
         schoolDto.setSchoolName(statisticizedTeam2.getSchool()
-                                                  .getSchoolNameString());
+                                                  .getSchool());
         schoolDto.setRank(statisticizedTeam2.getRank());
         schoolDto.setPointsForPerGame(statisticizedTeam2.getPointsForPerGame());
         schoolDto.setPointsAllowedPerGame(statisticizedTeam2.getPointsAllowedPerGame());
         schoolDto.setOffensePerGame(statisticizedTeam2.getOffensePerGame());
         schoolDto.setDefensePerGame(statisticizedTeam2.getDefensePerGame());
         schoolDto.setStrengthOfSchedulePerGame(statisticizedTeam2.getStrengthOfSchedulePerGame());
-        schoolDto.setRecord(statisticizedTeam2.getRecord());
+        schoolDto.setRecord(statisticizedTeam2.getRecord().toString());
         schoolDto.setWeight(statisticizedTeam2.getWeight());
         return schoolDto;
     }

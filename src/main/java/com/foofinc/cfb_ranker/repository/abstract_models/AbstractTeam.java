@@ -2,12 +2,13 @@ package com.foofinc.cfb_ranker.repository.abstract_models;
 
 import com.foofinc.cfb_ranker.repository.api.dto.StatsDto;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public abstract class AbstractTeam {
-    private String school;
-    private int points;
-    private StatsDto[] stats;
+public abstract class AbstractTeam implements Serializable {
+    protected String school;
+    protected int points;
+    protected StatsDto[] stats;
 
     public AbstractTeam() {
     }

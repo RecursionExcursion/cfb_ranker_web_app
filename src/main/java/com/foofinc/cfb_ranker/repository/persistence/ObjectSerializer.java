@@ -2,11 +2,11 @@ package com.foofinc.cfb_ranker.repository.persistence;
 
 import java.io.*;
 
-public class MemorySerializationManager<T extends Serializable> {
+public class ObjectSerializer<T extends Serializable> {
 
     private final File filePath;
 
-    public MemorySerializationManager(String filePath) {
+    public ObjectSerializer(String filePath) {
         this.filePath = new File(filePath + ".ser");
     }
 

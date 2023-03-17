@@ -2,11 +2,12 @@ package com.foofinc.cfb_ranker.repository.abstract_models;
 
 import com.foofinc.cfb_ranker.repository.api.dto.TeamDto;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public abstract class AbstractFixture {
-    private long id;
-    private TeamDto[] teams;
+public abstract class AbstractFixture implements Serializable {
+    protected long id;
+    protected TeamDto[] teams;
 
     public AbstractFixture(TeamDto[] teams) {
         this.teams = teams;

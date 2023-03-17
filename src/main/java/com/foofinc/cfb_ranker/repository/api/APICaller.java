@@ -12,6 +12,7 @@ Singleton
  */
 
 enum APICaller {
+
     INSTANCE;
 
     String getJSONFromAPICall(String urlString, String bearer) throws IOException {

@@ -2,17 +2,17 @@ package com.foofinc.cfb_ranker.repository.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.foofinc.cfb_ranker.repository.api.dto.CompleteGameDto;
-import com.foofinc.cfb_ranker.repository.api.dto.FixtureDto;
-import com.foofinc.cfb_ranker.repository.api.dto.GameDataDto;
-import com.foofinc.cfb_ranker.repository.api.dto.SchoolDto;
+import com.foofinc.cfb_ranker.repository.abstract_models.AbstractFixture;
+import com.foofinc.cfb_ranker.repository.abstract_models.AbstractGameData;
+import com.foofinc.cfb_ranker.repository.api.dto.*;
+import com.foofinc.cfb_ranker.repository.model.new_models.SerializableSeason;
+import com.foofinc.cfb_ranker.repository.model.new_models.SerializableGame;
+import com.foofinc.cfb_ranker.repository.model.new_models.SerializableSchool;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public final class CfbApiAccess {
 
@@ -20,25 +20,34 @@ public final class CfbApiAccess {
     private final String teamGamesUrlString = "https://api.collegefootballdata.com/games/teams?year=2022"/*&seasonType=regular&week=#*/;
     private final String[] gamesUrlString =
             {"https://api.collegefootballdata.com/games?year=2022" /*&week=#&seasonType=regular*/, "&division=fbs"};
-    private final List<SchoolDto> schools;
-    private final List<Map<Long, CompleteGameDto>> weeks;
+
     private final ObjectMapper mapper = new ObjectMapper();
 
+    private final SerializableSeason season = new SerializableSeason();
+
     public CfbApiAccess() {
-        schools = getAllSchools();
-        weeks = getFixturesForSeason();
+        loadSchoolsIntoSeason();
+        loadGamesIntoSeason();
     }
 
-    public List<Map<Long, CompleteGameDto>> getWeeks() {
-        return List.copyOf(weeks);
+    public SerializableSeason getSeason() {
+        return season;
     }
 
-    public List<SchoolDto> getSchools() {
-        return List.copyOf(schools);
+    private void loadSchoolsIntoSeason() {
+        SchoolDto[] schoolDtos = sendGetRequest(SchoolDto[].class);
+        for (SchoolDto dto : schoolDtos) {
+            season.getSchools()
+                  .add(new SerializableSchool(dto));
+        }
     }
 
-    private List<SchoolDto> getAllSchools() {
-        return List.of(sendGetRequest(SchoolDto[].class));
+    private void loadGamesIntoSeason() {
+        List<CompleteGameDto> gamesForSeason = getGamesForSeason();
+        for (CompleteGameDto dto : gamesForSeason) {
+            season.getGames()
+                  .add(new SerializableGame(dto));
+        }
     }
 
     /*
@@ -46,51 +55,69 @@ public final class CfbApiAccess {
     Returns a list containing maps representing week# that hold data from FixtureDto and GameDataDto wrapped in a
     CompleteGameDto.
      */
-    private List<Map<Long, CompleteGameDto>> getFixturesForSeason() {
+    private List<CompleteGameDto> getGamesForSeason() {
         String regSeason = "&seasonType=regular";
         String postSeason = "&seasonType=postseason";
 
-        List<Map<Long, CompleteGameDto>> completeGameMap = new ArrayList<>();
+        List<CompleteGameDto> gameList = new ArrayList<>();
 
         //Regular Season
         int startingWeek = 1, weeksInSeason = 15;
         for (int i = startingWeek; i <= weeksInSeason; i++) {
-            Map<Long, CompleteGameDto> finalListMapCopy = mapToCompleteGameDto(regSeason, i);
-            if (finalListMapCopy == null) break;
-            completeGameMap.add(finalListMapCopy);
+
+            List<CompleteGameDto> dtoList = mapToCompleteGameDtoList(regSeason, i);
+            if (dtoList == null) break;
+            gameList.addAll(dtoList);
         }
 
-        //Post Season
-        Map<Long, CompleteGameDto> finalListMapCopy = mapToCompleteGameDto(postSeason, 1);
-        completeGameMap.add(finalListMapCopy);
+        List<CompleteGameDto> dtoList = mapToCompleteGameDtoList(postSeason, 1);
+        if (dtoList != null) {
+            gameList.addAll(dtoList);
+        }
 
-
-        return completeGameMap;
+        return gameList;
     }
 
-    private Map<Long, CompleteGameDto> mapToCompleteGameDto(String season, int i) {
-        FixtureDto[] tempFixDto = sendGetRequest(i, season, FixtureDto[].class);
-        GameDataDto[] tempGameDataDto = sendGetRequest(i, season, GameDataDto[].class);
-        if (tempFixDto.length == 0) {
-            return null;
-        }
+    private List<CompleteGameDto> mapToCompleteGameDtoList(String season, int i) {
 
-        final Map<Long, CompleteGameDto> tempMap = new HashMap<>();
-        for (FixtureDto fixDto : tempFixDto) {
-            tempMap.put(fixDto.getId(), new CompleteGameDto(fixDto.getId(), fixDto));
-        }
-        for (GameDataDto gameDto : tempGameDataDto) {
-            if (tempMap.containsKey(gameDto.getId())) {
-                tempMap.get(gameDto.getId())
-                       .setGameDataDto(gameDto);
+        AbstractFixture[] tempFixDto = sendGetRequest(i, season, FixtureDto[].class);
+        AbstractGameData[] tempGameDataDto = sendGetRequest(i, season, GameDataDto[].class);
+
+        if (tempFixDto.length == 0) return null;
+
+        final List<CompleteGameDto> tempList = new ArrayList<>();
+
+        for (AbstractFixture fixDto : tempFixDto) {
+
+            TeamDto[] teams = fixDto.getTeams();
+
+            long count = this.season.getSchools()
+                                    .stream()
+                                    .filter(t -> t.getSchool().equals(teams[0].getSchool()) ||
+                                            t.getSchool().equals(teams[1].getSchool())).count();
+
+
+            if (count != 0) {
+                CompleteGameDto dto = new CompleteGameDto();
+                dto.setId(fixDto.getId());
+                dto.setFixture(fixDto);
+                tempList.add(dto);
             }
         }
 
-        return tempMap.keySet()
-                      .stream()
-                      .filter(key -> !tempMap.get(key)
-                                             .hasNullData())
-                      .collect(Collectors.toMap(id -> id, tempMap::get));
+        for (AbstractGameData gameDto : tempGameDataDto) {
+
+            Optional<CompleteGameDto> gameOptional = tempList.stream()
+                                                             .filter(g -> g.getId() == gameDto.getId())
+                                                             .findAny();
+
+            if (gameOptional.isPresent()) {
+                CompleteGameDto completeGameDto = gameOptional.get();
+                completeGameDto.setGameData(gameDto);
+            }
+        }
+
+        return tempList;
     }
 
     private <T> T sendGetRequest(int week, String seasonType, Class<T> t) {

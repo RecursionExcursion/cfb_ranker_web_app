@@ -1,7 +1,7 @@
 package com.foofinc.cfb_ranker.controller;
 
 import com.foofinc.cfb_ranker.service.SchoolService;
-import com.foofinc.cfb_ranker.service.dto.RankingsDto;
+import com.foofinc.cfb_ranker.service.entity.RankedSeason;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class SchoolController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/teams")
-    public ResponseEntity<RankingsDto> getTeams() {
+    public ResponseEntity<RankedSeason> getTeams() {
         return new ResponseEntity<>(schoolService.getTeams(), HttpStatus.OK);
     }
 }

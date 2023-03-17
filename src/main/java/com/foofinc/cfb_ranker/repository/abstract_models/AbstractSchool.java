@@ -1,14 +1,16 @@
 package com.foofinc.cfb_ranker.repository.abstract_models;
 
-public abstract class AbstractSchool {
+import java.io.Serializable;
 
-    private long id;
-    private String school;
-    private String mascot;
-    private String abbreviation;
-    private String color;
-    private String altColor;
-    private String[] logos;
+public abstract class AbstractSchool implements Serializable {
+
+    public long id;
+    public String school;
+    public String mascot;
+    public String abbreviation;
+    public String color;
+    public String altColor;
+    public String[] logos;
 
     public String getSchool() {
         return school;
