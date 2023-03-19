@@ -1,10 +1,9 @@
 package com.foofinc.cfb_ranker.service;
 
 import com.foofinc.cfb_ranker.repository.SchoolsRepository;
-import com.foofinc.cfb_ranker.repository.model.SerializableSeason;
 import com.foofinc.cfb_ranker.service.entity.RankedSeason;
-import com.foofinc.cfb_ranker.service.rank_algo.RankingAlgorithm;
 import com.foofinc.cfb_ranker.service.entity.StatWeight;
+import com.foofinc.cfb_ranker.service.rank_algo.RankingAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,28 +18,23 @@ public class SchoolService {
     }
 
     public ResponseDto getTeams() {
-        SerializableSeason teams = schoolsRepository.getTeams();
-
         StatWeight statWeight = new StatWeight(6, 6,
                                                4, 4,
                                                1, 1,
                                                2, 5);
-
-        RankedSeason rankedSeason = new RankingAlgorithm(teams, statWeight).rankAndGetTeams();
-
-        ResponseDto dto = new ResponseDto(statWeight, rankedSeason);
-
-        return dto;
+        return buildResponseDto(statWeight);
     }
 
     public ResponseDto getTeams(StatWeight statWeight) {
-        SerializableSeason teams = schoolsRepository.getTeams();
+        return buildResponseDto(statWeight);
+    }
 
-        RankedSeason rankedSeason = new RankingAlgorithm(teams, statWeight).rankAndGetTeams();
-
+    private ResponseDto buildResponseDto(StatWeight statWeight) {
+        RankedSeason rankedSeason = new RankingAlgorithm(
+                schoolsRepository.getTeams(),
+                statWeight)
+                .getSeason();
         ResponseDto dto = new ResponseDto(statWeight, rankedSeason);
-
         return dto;
-
     }
 }

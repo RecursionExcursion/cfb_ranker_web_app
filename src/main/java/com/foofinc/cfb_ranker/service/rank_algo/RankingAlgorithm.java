@@ -25,8 +25,12 @@ public class RankingAlgorithm {
         this.statWeight = statWeight;
     }
 
-    public RankedSeason rankAndGetTeams() {
+    public RankedSeason getSeason() {
+        rank();
+        return weightedRankedSeason;
+    }
 
+    private void rank(){
         int lastWeek = season.getGames().stream()
                              .map(g -> g.getGameData().getWeek())
                              .max(Comparator.naturalOrder()).orElse(-1);
@@ -47,8 +51,6 @@ public class RankingAlgorithm {
             List<StatisticizedTeam> week = weeks.get(i);
             weightedRankedSeason.getWeeks().add(setWeightAndRank(week, i));
         }
-
-        return weightedRankedSeason;
     }
 
     private List<StatisticizedTeam> setWeightAndRank(List<StatisticizedTeam> teams, int index) {

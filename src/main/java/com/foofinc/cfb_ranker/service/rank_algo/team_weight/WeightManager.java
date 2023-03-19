@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class WeightManager {
 
-    StatWeight statWeight;
+    private final StatWeight statWeight;
 
     public WeightManager(StatWeight statWeight) {
         this.statWeight = statWeight;
