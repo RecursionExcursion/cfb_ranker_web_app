@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 public class SchoolsRepository {
 
     public SerializableSeason getTeams() {
-        return LocalMemoryRepoManager.retrieveData();
+        return LocalMemoryRepoManager.retrieveSeason();
     }
 }
