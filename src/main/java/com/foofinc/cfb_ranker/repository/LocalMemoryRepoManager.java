@@ -1,7 +1,9 @@
 package com.foofinc.cfb_ranker.repository;
 
 
+import com.foofinc.cfb_ranker.repository.api.CfbApiAccess;
 import com.foofinc.cfb_ranker.repository.model.SerializableSeason;
+import com.foofinc.cfb_ranker.repository.persistence.SerializationManager;
 
 /**
  * Checks local memory for file and loads the serialized data to minimize calls to the CFB API
@@ -11,6 +13,13 @@ import com.foofinc.cfb_ranker.repository.model.SerializableSeason;
 class LocalMemoryRepoManager {
 
     static SerializableSeason retrieveSeason() {
-        return StaticSeason.INSTANCE.getSeason();
+        SerializationManager serializationManager = SerializationManager.INSTANCE;
+
+        SerializableSeason season = serializationManager.loadSeason();
+        if (serializationManager.dataIsCorrupted() || !serializationManager.fileExists()) {
+            serializationManager.saveSeason(new CfbApiAccess().getSeason());
+            season = serializationManager.loadSeason();
+        }
+        return season;
     }
 }

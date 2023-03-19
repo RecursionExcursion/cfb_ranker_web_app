@@ -21,6 +21,10 @@ public final class CfbApiAccess {
     private final String[] gamesUrlString =
             {"https://api.collegefootballdata.com/games?year=2022" /*&week=#&seasonType=regular*/, "&division=fbs"};
 
+    //TODO Unimplemented API Call
+    private final String week1PollsUrlString =
+            "https://api.collegefootballdata.com/rankings?year=2022&week=1&seasonType=regular";
+
     private final ObjectMapper mapper = new ObjectMapper();
 
     private final SerializableSeason season = new SerializableSeason();
@@ -33,6 +37,8 @@ public final class CfbApiAccess {
     public SerializableSeason getSeason() {
         return season;
     }
+
+    //TODO Executor Service to handle each request?
 
     private void loadSchoolsIntoSeason() {
         SchoolDto[] schoolDtos = sendGetRequest(SchoolDto[].class);

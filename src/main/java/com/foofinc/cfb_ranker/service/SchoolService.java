@@ -30,11 +30,9 @@ public class SchoolService {
     }
 
     private ResponseDto buildResponseDto(StatWeight statWeight) {
-        RankedSeason rankedSeason = new RankingAlgorithm(
-                schoolsRepository.getTeams(),
-                statWeight)
-                .getSeason();
-        ResponseDto dto = new ResponseDto(statWeight, rankedSeason);
-        return dto;
+
+        RankedSeason rankedSeason = new RankingAlgorithm(schoolsRepository.getTeams(), statWeight).getSeason();
+
+        return new ResponseDto(statWeight, rankedSeason);
     }
 }
