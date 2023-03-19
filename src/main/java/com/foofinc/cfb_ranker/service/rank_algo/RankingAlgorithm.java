@@ -1,10 +1,13 @@
-package com.foofinc.cfb_ranker.service.entity;
+package com.foofinc.cfb_ranker.service.rank_algo;
 
 import com.foofinc.cfb_ranker.repository.abstract_models.AbstractTeam;
 import com.foofinc.cfb_ranker.repository.model.SerializableGame;
 import com.foofinc.cfb_ranker.repository.model.SerializableSchool;
 import com.foofinc.cfb_ranker.repository.model.SerializableSeason;
-import com.foofinc.cfb_ranker.service.entity.team_weight.*;
+import com.foofinc.cfb_ranker.service.entity.RankedSeason;
+import com.foofinc.cfb_ranker.service.entity.StatWeight;
+import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam;
+import com.foofinc.cfb_ranker.service.rank_algo.team_weight.WeightManager;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -12,12 +15,14 @@ import java.util.function.Function;
 
 public class RankingAlgorithm {
 
+    private final StatWeight statWeight;
     private final RankedSeason rankedSeason = new RankedSeason();
     private final RankedSeason weightedRankedSeason = new RankedSeason();
     private final SerializableSeason season;
 
-    public RankingAlgorithm(SerializableSeason season) {
+    public RankingAlgorithm(SerializableSeason season, StatWeight statWeight) {
         this.season = season;
+        this.statWeight = statWeight;
     }
 
     public RankedSeason rankAndGetTeams() {
@@ -48,7 +53,7 @@ public class RankingAlgorithm {
 
     private List<StatisticizedTeam> setWeightAndRank(List<StatisticizedTeam> teams, int index) {
 
-        WeightManager weightManager = new WeightManager();
+        WeightManager weightManager = new WeightManager(statWeight);
 
         //Set weight for base stats
         List<Map<StatisticizedTeam, Double>> weightMapsList = weightManager.getWeightMapsList(teams);

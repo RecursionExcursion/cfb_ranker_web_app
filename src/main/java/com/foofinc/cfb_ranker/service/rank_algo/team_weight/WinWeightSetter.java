@@ -1,13 +1,14 @@
-package com.foofinc.cfb_ranker.service.entity.team_weight;
+package com.foofinc.cfb_ranker.service.rank_algo.team_weight;
 
+import com.foofinc.cfb_ranker.service.entity.StatWeight;
 import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam;
 
 import java.util.Comparator;
 import java.util.List;
 
 class WinWeightSetter extends WeightSetter {
-    WinWeightSetter(List<StatisticizedTeam> teams) {
-        super(teams);
+    public WinWeightSetter(List<StatisticizedTeam> teams, StatWeight statWeight) {
+        super(teams, statWeight);
     }
 
     @Override

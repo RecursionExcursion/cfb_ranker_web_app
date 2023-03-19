@@ -1,8 +1,9 @@
-package com.foofinc.cfb_ranker.service.entity;
+package com.foofinc.cfb_ranker.service.rank_algo;
 
 import com.foofinc.cfb_ranker.repository.abstract_models.AbstractStats;
 import com.foofinc.cfb_ranker.repository.abstract_models.AbstractTeam;
 import com.foofinc.cfb_ranker.repository.model.SerializableGame;
+import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,5 +1,6 @@
-package com.foofinc.cfb_ranker.service.entity.team_weight;
+package com.foofinc.cfb_ranker.service.rank_algo.team_weight;
 
+import com.foofinc.cfb_ranker.service.entity.StatWeight;
 import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam;
 
 import java.util.HashMap;
@@ -7,8 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 class PollInteriaWeightSetter extends WeightSetter {
-    PollInteriaWeightSetter( List<StatisticizedTeam> teams) {
-        super( teams);
+    public PollInteriaWeightSetter(List<StatisticizedTeam> teams,
+                                   StatWeight statWeight) {
+        super(teams, statWeight);
     }
 
     @Override

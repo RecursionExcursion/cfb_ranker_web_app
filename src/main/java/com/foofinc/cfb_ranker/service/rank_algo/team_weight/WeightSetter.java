@@ -1,4 +1,4 @@
-package com.foofinc.cfb_ranker.service.entity.team_weight;
+package com.foofinc.cfb_ranker.service.rank_algo.team_weight;
 
 import com.foofinc.cfb_ranker.service.entity.StatWeight;
 import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam;
@@ -11,9 +11,10 @@ abstract class WeightSetter {
 
     protected int multiplier;
     protected List<StatisticizedTeam> rankedTeams;
-    protected StatWeight statWeight = StatWeight.getInstance();
+    protected StatWeight statWeight;
 
-    WeightSetter(List<StatisticizedTeam> teams) {
+    WeightSetter(List<StatisticizedTeam> teams, StatWeight statWeight) {
+        this.statWeight = statWeight;
         this.multiplier = getMultiplierWeight();
         this.rankedTeams = rankTeams(teams);
     }

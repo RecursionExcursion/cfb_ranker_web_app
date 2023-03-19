@@ -24,7 +24,7 @@ public class StatisticizedTeam {
 
     private int gamesPlayed;
 
-    private List<SerializableGame> schedule;
+    private final List<SerializableGame> schedule;
 
     public StatisticizedTeam(SerializableSchool school) {
         this.school = school;

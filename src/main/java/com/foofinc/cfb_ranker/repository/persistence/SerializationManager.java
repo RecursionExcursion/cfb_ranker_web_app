@@ -16,12 +16,9 @@ public enum SerializationManager {
 
     INSTANCE;
 
-    //TODO *//*
     private final String pathToFileFolder = "src/main/java/com/foofinc/cfb_ranker/repository/persistence/fbs_data/";
     private final String fileName = "team_data";
     private final ObjectSerializer<SerializableSeason> seasonSerializer = new ObjectSerializer<>(pathToFileFolder + fileName);
-    SerializableSeason season;
-    //TODO *//*
 
     public SerializableSeason loadSeason() {
         try {

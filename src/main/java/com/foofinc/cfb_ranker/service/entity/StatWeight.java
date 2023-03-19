@@ -2,31 +2,19 @@ package com.foofinc.cfb_ranker.service.entity;
 
 public class StatWeight {
 
-    private static StatWeight INSTANCE;
+    private int winWeight;
+    private int lossWeight;
 
-    private int winWeight = 6;
-    private int lossWeight = 6;
+    private int pointsForWeight;
+    private int pointsAllowedWeight;
 
-    private int pointsForWeight = 4;
-    private int pointsAllowedWeight = 4;
+    private int offensiveYardsWeight;
+    private int defensiveYardsWeight;
 
-    private int offensiveYardsWeight = 1;
-    private int defensiveYardsWeight = 1;
+    private int strengthOfScheduleWeight;
+    private int pollInertiaWeight;
 
-    private int strengthOfScheduleWeight = 2;
-    private int pollInertiaWeight = 5;
-
-    private StatWeight() {
-    }
-
-    public static StatWeight getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new StatWeight();
-        }
-        return INSTANCE;
-    }
-
-    public void setWeights(int newWinWeight, int newLossWeight,
+    public StatWeight(int newWinWeight, int newLossWeight,
                                   int newPointsForWeight, int newPointsAllowedWeight,
                                   int newOffensiveYardsWeight, int newDefensiveYardsWeight,
                                   int newStrengthOfScheduleWeight, int newPollInertiaWeight) {
@@ -70,5 +58,37 @@ public class StatWeight {
 
     public int getPollInertiaWeight() {
         return pollInertiaWeight;
+    }
+
+    public void setWinWeight(int winWeight) {
+        this.winWeight = winWeight;
+    }
+
+    public void setLossWeight(int lossWeight) {
+        this.lossWeight = lossWeight;
+    }
+
+    public void setPointsForWeight(int pointsForWeight) {
+        this.pointsForWeight = pointsForWeight;
+    }
+
+    public void setPointsAllowedWeight(int pointsAllowedWeight) {
+        this.pointsAllowedWeight = pointsAllowedWeight;
+    }
+
+    public void setOffensiveYardsWeight(int offensiveYardsWeight) {
+        this.offensiveYardsWeight = offensiveYardsWeight;
+    }
+
+    public void setDefensiveYardsWeight(int defensiveYardsWeight) {
+        this.defensiveYardsWeight = defensiveYardsWeight;
+    }
+
+    public void setStrengthOfScheduleWeight(int strengthOfScheduleWeight) {
+        this.strengthOfScheduleWeight = strengthOfScheduleWeight;
+    }
+
+    public void setPollInertiaWeight(int pollInertiaWeight) {
+        this.pollInertiaWeight = pollInertiaWeight;
     }
 }
