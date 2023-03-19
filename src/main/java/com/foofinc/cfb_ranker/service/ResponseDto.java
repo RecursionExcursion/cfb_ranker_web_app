@@ -5,18 +5,18 @@ import com.foofinc.cfb_ranker.service.entity.StatWeight;
 
 public class ResponseDto {
 
-    private Object[] objects = new Object[2];
+    private Object[] responseObjects = new Object[2];
 
     public ResponseDto(StatWeight statWeight, RankedSeason rankedSeason) {
-            objects[0]= statWeight;
-            objects[1] = rankedSeason;
+            responseObjects[0]= statWeight;
+            responseObjects[1] = rankedSeason;
     }
 
-    public Object[] getObjects() {
-        return objects;
+    public Object[] getResponseObjects() {
+        return responseObjects;
     }
 
-    public void setObjects(Object[] objects) {
-        this.objects = objects;
+    public void setResponseObjects(Object[] responseObjects) {
+        this.responseObjects = responseObjects;
     }
 }
