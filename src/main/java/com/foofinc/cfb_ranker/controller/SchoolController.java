@@ -31,5 +31,4 @@ public class SchoolController {
     public ResponseEntity<ResponseDto> postTeams(@RequestBody StatWeight statWeight){
         return new ResponseEntity<>(schoolService.getTeams(statWeight), HttpStatus.OK);
     }
-
 }
