@@ -3,7 +3,6 @@ package com.foofinc.cfb_ranker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//Hrello
 @SpringBootApplication
 public class CfbRankerApplication {
 
