@@ -14,10 +14,13 @@ public class StatWeight {
     private int strengthOfScheduleWeight;
     private int pollInertiaWeight;
 
+    public StatWeight() {
+    }
+
     public StatWeight(int newWinWeight, int newLossWeight,
-                                  int newPointsForWeight, int newPointsAllowedWeight,
-                                  int newOffensiveYardsWeight, int newDefensiveYardsWeight,
-                                  int newStrengthOfScheduleWeight, int newPollInertiaWeight) {
+                      int newPointsForWeight, int newPointsAllowedWeight,
+                      int newOffensiveYardsWeight, int newDefensiveYardsWeight,
+                      int newStrengthOfScheduleWeight, int newPollInertiaWeight) {
         winWeight = newWinWeight;
         lossWeight = newLossWeight;
         pointsForWeight = newPointsForWeight;
