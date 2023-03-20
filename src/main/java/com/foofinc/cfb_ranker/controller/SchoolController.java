@@ -27,7 +27,8 @@ public class SchoolController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/teams")
+    @RequestMapping("/teams")
+    @ResponseBody
     public ResponseEntity<ResponseDto> postTeams(@RequestBody StatWeight statWeight){
 
 
