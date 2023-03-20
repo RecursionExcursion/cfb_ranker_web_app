@@ -2,9 +2,7 @@ package com.foofinc.cfb_ranker.service.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
-
-public class StatWeight implements Serializable {
+public class StatWeight {
     @JsonProperty("winWeight")
     private int winWeight;
     @JsonProperty("lossWeight")
@@ -41,6 +39,7 @@ public class StatWeight implements Serializable {
         strengthOfScheduleWeight = newStrengthOfScheduleWeight;
         pollInertiaWeight = newPollInertiaWeight;
     }
+
 
     public int getWinWeight() {
         return winWeight;
