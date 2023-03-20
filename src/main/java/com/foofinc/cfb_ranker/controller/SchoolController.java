@@ -1,5 +1,6 @@
 package com.foofinc.cfb_ranker.controller;
 
+
 import com.foofinc.cfb_ranker.service.ResponseDto;
 import com.foofinc.cfb_ranker.service.SchoolService;
 import com.foofinc.cfb_ranker.service.entity.StatWeight;
@@ -27,9 +28,8 @@ public class SchoolController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(value = "/teams", consumes = "application/json")
+    @PutMapping(value = "/teams", consumes = "application/json")
     public ResponseEntity<ResponseDto> postTeams(@RequestBody StatWeight statWeight) {
-
         return new ResponseEntity<>(schoolService.getTeams(statWeight), HttpStatus.OK);
     }
 }
