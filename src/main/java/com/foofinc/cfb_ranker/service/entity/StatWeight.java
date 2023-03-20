@@ -1,17 +1,26 @@
 package com.foofinc.cfb_ranker.service.entity;
 
-public class StatWeight {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public class StatWeight {
+    @JsonProperty("winWeight")
     private int winWeight;
+    @JsonProperty("lossWeight")
     private int lossWeight;
 
+    @JsonProperty("pointsForWeight")
     private int pointsForWeight;
+    @JsonProperty("pointsAllowedWeight")
     private int pointsAllowedWeight;
 
+    @JsonProperty("offensiveYardsWeight")
     private int offensiveYardsWeight;
+    @JsonProperty("defensiveYardsWeight")
     private int defensiveYardsWeight;
 
+    @JsonProperty("strengthOfScheduleWeight")
     private int strengthOfScheduleWeight;
+    @JsonProperty("pollInertiaWeight")
     private int pollInertiaWeight;
 
     public StatWeight() {
