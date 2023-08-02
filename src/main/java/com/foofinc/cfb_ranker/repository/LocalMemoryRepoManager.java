@@ -16,7 +16,7 @@ class LocalMemoryRepoManager {
         SerializationManager serializationManager = SerializationManager.INSTANCE;
 
         SerializableSeason season = serializationManager.loadSeason();
-        if (serializationManager.dataIsCorrupted() || !serializationManager.fileExists()) {
+        if (!serializationManager.fileExists() || serializationManager.dataIsCorrupted()) {
             serializationManager.saveSeason(new CfbApiAccess().getSeason());
             season = serializationManager.loadSeason();
         }

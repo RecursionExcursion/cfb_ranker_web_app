@@ -5,13 +5,12 @@ import com.foofinc.cfb_ranker.repository.abstract_models.AbstractTeam;
 import com.foofinc.cfb_ranker.repository.model.SerializableGame;
 import com.foofinc.cfb_ranker.service.entity.StatisticizedTeam;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-public class StatCompiler {
-    public static void CompileStatsForTeam(SerializableGame game, StatisticizedTeam team) {
+class StatCompiler {
+    static void CompileStatsForTeam(SerializableGame game, StatisticizedTeam team) {
 
         AbstractTeam thisTeam = AbstractTeam.getTeamFromStatGame(game, team);
         AbstractTeam oppTeam = AbstractTeam.getOpponentFromStatGame(game, team);
@@ -68,22 +67,18 @@ public class StatCompiler {
 
     private static String GameNotComplete(String gameId, String homeOrAway) {
         try {
+
+            record MissingGame(String id, String homeYards, String awayYards) {}
+
             //Replace with WebScraper?, currently manually handling errors
-            String[] buffAkrWk14 = new String[]{
-                    //Game ID
-                    "401506450",
-                    //Home Yards
-                    "291",
-                    //Away Yards
-                    "306"
-            };
+            MissingGame buffAkrWk14 = new MissingGame("401506450", "291", "306");
 
-            List<String[]> gamesWithoutStats = new ArrayList<>();
-            gamesWithoutStats.add(buffAkrWk14);
+            List<MissingGame> gamesWithoutStats = List.of(buffAkrWk14);
 
-            for (String[] game : gamesWithoutStats) {
-                if (game[0].equals(gameId)) {
-                    return homeOrAway.equals("H") ? game[1] : game[2];
+            for (MissingGame game : gamesWithoutStats) {
+                if (game.id.equals(gameId)) {
+                    System.out.printf("%s has been added manually", game.id);
+                    return homeOrAway.equals("H") ? game.homeYards : game.awayYards;
                 }
             }
             throw new Exception("Game was not found");
@@ -92,5 +87,8 @@ public class StatCompiler {
         }
         return null;
     }
+
 }
+
+
 
